@@ -9,10 +9,18 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
+    "axios": "^1.6.7",
+    "chalk": "^4.0.0",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.1",
     "express": "^4.16.4",
+    "express-swagger-generator": "^1.1.17",
+    "jsonwebtoken": "^9.0.2",
+    "log4js": "^6.4.4",
     "morgan": "^1.10.0",
+    "mount-routes": "^1.0.8",
     "mysql2": "^2.3.2",
+    "request": "^2.88.2",
     "sequelize": "^6.8.0"
   },
   "engines": {
