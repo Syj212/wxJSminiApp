@@ -20,7 +20,7 @@ app.use(cors());
 // expressSwagger(options)
 // app.use(expressSwagger)
 
-const port = process.env.PORT || 8888;
+const port = process.env.PORT || 80;
 
 async function bootstrap() {
   // await initDB();
