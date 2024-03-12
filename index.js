@@ -10,7 +10,6 @@ const app = express();
 app.use(express.urlencoded({extended: false})); 
 app.use(express.json());
 app.use('/api',router)
-app.use(express.json());
 app.use(cors());
 // app.use(logger);
 
@@ -20,13 +19,12 @@ app.use(cors());
 // expressSwagger(options)
 // app.use(expressSwagger)
 
-const port = process.env.PORT || 80;
+const port = process.env.DEV_PORT || 80;
 
 async function bootstrap() {
-  // await initDB();
   app.listen(port, () => {
-    console.log(`项目启动成功: ${process.env.DEV_URL}:${process.env.DEV_PORT}`);
-    console.log(`接口文档地址: ${process.env.DEV_URL}:${process.env.DEV_PORT}/swagger`);
+    console.log(`项目启动成功: http://localhost:${port}`);
+    console.log(`接口文档地址: http://localhost:${port}/swagger`);
   });
 }
 bootstrap();

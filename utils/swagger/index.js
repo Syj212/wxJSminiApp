@@ -5,10 +5,18 @@ const options = {
             version: '1.0.0',
             description: `接口api`
         },
-        host: `${process.env.DEV_URL}:${process.env.DEV_PORT}`,
+        host: `localhost:80`,
         basePath: '/',
         produces: ['application/json', 'application/xml'],
-        schemes: ['http', 'https']
+        schemes: ['http', 'https'],
+        securityDefinitions: {
+            JWT: {
+                type: 'apiKey',
+                in: 'header',
+                name: 'Authorization',
+                description: ''
+            }
+        }
     },
     route: {
         url: '/swagger',//打开swagger文档页面地址
