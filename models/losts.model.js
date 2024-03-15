@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    return sequelize.define("sends", {
+    return sequelize.define("losts", {
         id: {
             type: Sequelize.UUID,
             notNull: true,

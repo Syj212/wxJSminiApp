@@ -199,7 +199,7 @@ router.post('/login', (req, res, next) => {
 // });
 /**
  * 发布失物招领
- * @route POST /sendPublish
+ * @route POST /sendLosts
  * @group 全局按钮发布失物招领
  * @param {string} openid - 用户openid
  * @param {string} names - 物品名称
@@ -210,10 +210,10 @@ router.post('/login', (req, res, next) => {
  * @param {string} imageUrls - 图片（逗号分隔）
  * @returns {object} 200 - 请求成功
  */
-const Send = require("../../../controllers/send.controller.js");
-router.post('/sendPublish', (req, res, next) => {
+const Lost = require("../../../controllers/lost.controller.js");
+router.post('/sendLosts', (req, res, next) => {
     //将数据插入数据库
-    Send.send(req.body.data, (response, err) => {
+    Lost.lost(req.body.data, (response, err) => {
         if (err) {
             res.send({
                 code: -1, // -1 表示处理失败
@@ -231,16 +231,16 @@ router.post('/sendPublish', (req, res, next) => {
 })
 /**
  * 获取失物招领列表
- * @route POST /sendPublish
+ * @route POST /getLostList
  * @group 首页-获取失物招领列表
  * @param {string} pageSize - 每页数量
  * @param {string} pageNum - 当前页
  * @returns {object} 200 - 请求成功
  */
-router.post('/getFeedList', (req, res, next) => {
+router.post('/getLostList', (req, res, next) => {
     // 查询数据库
     console.log(req.body);
-    Send.getFeedList(req.body, (response, err) => {
+    Lost.getFeedList(req.body, (response, err) => {
         if (err) {
             res.send({
                 code: -1, // -1 表示处理失败

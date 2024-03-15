@@ -1,9 +1,9 @@
 const db = require("../models");
 const Sequelize = require("sequelize");
-const sends = db.sends;
+const losts = db.losts;
 const users = db.users;
 
-exports.send = function (pm, cb) {
+exports.lost = function (pm, cb) {
     console.log(pm);
     // 根据openid查询用户信息
     users.findOne({
@@ -17,7 +17,7 @@ exports.send = function (pm, cb) {
             cb(null, '用户校验失败！'); // 传递结果给回调函数
         } else {
             // 用户存在，则发布一条消息
-            sends.create({
+            losts.create({
                 userid: user.id,
                 desc: pm.desc,
                 img: pm.img,
@@ -39,11 +39,11 @@ exports.send = function (pm, cb) {
 
 };
 exports.getFeedList = function (pm, cb) {
-    sends.count().then(totalCount => {
+    losts.count().then(totalCount => {
         totalCount = totalCount - 1;
         // 从第pageNum条开始查询pageSize条数据
         console.log(pm);
-        sends.findAll({
+        losts.findAll({
             offset: pm.pageNum - 1,
             limit: pm.pageSize,// 添加limit来限制返回的数据条数
             order: [['createdAt', 'ASC']]

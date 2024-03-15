@@ -20,9 +20,9 @@ db.Op = Op; //操作符
 
 //用户
 db.users = require("./users.model.js")(sequelize, Sequelize);
-db.sends = require("./sends.model")(sequelize, Sequelize);
+db.losts = require("./losts.model")(sequelize, Sequelize);
 // const createTableSQL = db.users.sync({ force: false }).toString();
-// const createTableSQL = db.sends.sync({ force: false }).toString();
+// const createTableSQL = db.losts.sync({ force: false }).toString();
 // console.log(createTableSQL,'----');
 //各个表的应用关系
 module.exports = db;
