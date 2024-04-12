@@ -256,4 +256,56 @@ router.post('/getLostList', (req, res, next) => {
         }
     })
 })
+
+/**
+ * 获取评论列表
+ * @route POST /getCommentList
+ * @group 获取评论列表
+ * @param {string} lostid - 帖子id
+ * @returns {object} 200 - 请求成功
+ */
+const Comment = require("../../../controllers/comment.controller.js");
+router.post('/getCommentList', (req, res, next) => {
+    // 查询数据库
+    console.log(req.body);
+    Comment.getCommentList(req.body, (response, err) => {
+        if (err) {
+            res.send({
+                code: -1, // -1 表示处理失败
+                msg: '请求失败！', // 状态的描述
+                data: err
+            })
+        } else {
+            res.send({
+                code: 0, // 0 表示处理成功
+                msg: '请求成功！', // 状态的描述
+                data: response, // 需要响应给客户端的数据
+            })
+        }
+    })
+})
+/**
+ * 发布评论
+ * @route POST /postComment
+ * @group 获取评论列表
+ * @param {string} lostid - 帖子id
+ * @returns {object} 200 - 请求成功
+ */
+router.post('/postComment', (req, res, next) => {
+    Comment.postComment(req.body, (response, err) => {
+        if (err) {
+            res.send({
+                code: -1, // -1 表示处理失败
+                msg: '请求失败！', // 状态的描述
+                data: err
+            })
+        } else {
+            res.send({
+                code: 0, // 0 表示处理成功
+                msg: '请求成功！', // 状态的描述
+                data: response, // 需要响应给客户端的数据
+            })
+        }
+    })
+})
 module.exports = router;

@@ -2,10 +2,9 @@ const db = require("../models");
 const Sequelize = require("sequelize");
 const losts = db.losts;
 const users = db.users;
+const comments = db.comments;
 
-exports.lost = function (pm, cb) {
-    console.log(pm);
-    // 根据openid查询用户信息
+exports.postComment = function (pm, cb) {
     users.findOne({
         where: {
             openid: pm.openid
@@ -16,41 +15,43 @@ exports.lost = function (pm, cb) {
         if (!user) {
             cb(null, '用户校验失败！'); // 传递结果给回调函数
         } else {
-            // 用户存在，则发布一条消息
-            losts.create({
+            comments.create({// 创建评论
                 userid: user.id,
-                desc: pm.desc,
-                img: pm.img,
-                name: pm.name,
-                time: pm.time,
-                area: pm.area,
-                phone: pm.phone
+                content: pm.content,
+                level: pm.level,
+                lostid: pm.lostid,
+                parentid: pm.parentid,
+                obj_user_id: pm.obj_user_id,
+                obj_user_nickName: pm.obj_user_nickName
             }).then(data => {
                 cb(data, null);
             }).catch(err => {
                 console.log(err);
                 cb(null, err);
-            })
+            });
         }
     }).catch(error => {
         // 处理查询过程中的错误
         cb(null, error); // 传递错误给回调函数
     });
-
+    console.log(pm);
 };
-exports.getFeedList = function (pm, cb) {
-    losts.count().then(totalCount => {
-        totalCount = totalCount - 1;
-        // 从第pageNum条开始查询pageSize条数据
-        console.log(pm);
-        losts.findAll({
-            offset: pm.pageNum - 1,
-            limit: pm.pageSize,// 添加limit来限制返回的数据条数
-            order: [['createdAt', 'ASC']],
+exports.getCommentList = function (pm, cb) {
+    let whereParams = {
+        lostid: pm.lostid,
+        level: pm.level
+    };
+    if (pm.level == '2') whereParams.parentid = pm.parentid;
+    comments.count({
+        where: whereParams
+    }).then(totalCount => {
+        comments.findAll({
+            where: whereParams,
             include: [{
                 model: users
             }],
         }).then(data => {
+            // 数据已经是联表查询结果，无需再单独查询用户信息
             cb({ data, totalCount }, null);
         }).catch(err => {
             console.log(err);
@@ -58,7 +59,7 @@ exports.getFeedList = function (pm, cb) {
         });
     }).catch(err => {
         // 如果获取总记录数发生错误，返回错误
-        console.log(err);
         cb(err, null);
     });
 };
+

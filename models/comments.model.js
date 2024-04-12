@@ -14,13 +14,17 @@ module.exports = (sequelize, Sequelize) => {
                 key: 'id'
             }
         },
-        type: {
-            type: Sequelize.ENUM('lost', 'find', 'post'),
+        types: {
+            type: Sequelize.ENUM('1', '2'),
+            allowNull: true,
+        },
+        level: {
+            type: Sequelize.ENUM('1', '2'),
             allowNull: false,
         },
         lostid: {
             type: Sequelize.UUID,
-            notNull: false,
+            notNull: true,
             references: {
                 model: 'losts',
                 key: 'id'
@@ -34,6 +38,18 @@ module.exports = (sequelize, Sequelize) => {
                 key: 'id'
             }
         },
+        obj_user_id: {
+            type: Sequelize.UUID,
+            notNull: false,
+            references: {
+                model: 'users',
+                key: 'id'
+            }
+        },
+        obj_user_nickName: {
+            type: Sequelize.UUID,
+            notNull: false
+        },
         content: {
             type: Sequelize.STRING(1024),
             allowNull: false
@@ -42,7 +58,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.BOOLEAN,
             defaultValue: false,
             allowNull: false
-        }
+        },
         createdAt: {
             type: Sequelize.DATE,
             defaultValue: Sequelize.NOW,
